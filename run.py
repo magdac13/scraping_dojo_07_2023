@@ -22,13 +22,14 @@ class QuotesToScrape:
         return
 
     def __create_driver(self):
-        self.__driver = webdriver.Chrome(seleniumwire_options={'proxy': {'https': self.__env['proxy']}})
+        self.__driver = webdriver.Chrome()
         return
 
+    # seleniumwire_options = {'proxy': {'https': self.__env['proxy']}}
     def __load_env(self):
         load_dotenv()
         self.__env = {
-            'proxy': 'http://' + os.getenv('PROXY'),
+            # 'proxy': 'http://' + os.getenv('PROXY'),
             'input_url': os.getenv('INPUT_URL'),
             'output_file': os.getenv('OUTPUT_FILE')
         }
@@ -39,7 +40,7 @@ class QuotesToScrape:
 
         self.__wait_for_page_to_load()
         return [{
-            'text': quote.find_element(By.CLASS_NAME, 'p').text,
+            'text': quote.find_element(By.CLASS_NAME, 'text').text,
             'author': quote.find_element(By.CLASS_NAME, 'author').text,
             'tags': [tag.text for tag in quote.find_elements(By.CLASS_NAME, 'tag')],
         } for quote in self.__driver.find_elements(By.CLASS_NAME, 'quote')]
