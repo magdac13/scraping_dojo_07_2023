@@ -41,7 +41,7 @@ class QuotesToScrape:
         self.__wait_for_page_to_load()
         return [{
             'text': quote.find_element(By.CLASS_NAME, 'text').text,
-            'author': quote.find_element(By.CLASS_NAME, 'author').text,
+            'by': quote.find_element(By.CLASS_NAME, 'author').text,
             'tags': [tag.text for tag in quote.find_elements(By.CLASS_NAME, 'tag')],
         } for quote in self.__driver.find_elements(By.CLASS_NAME, 'quote')]
 
